@@ -1,0 +1,201 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/TeemuRov/UsedItemStore/1.0.0
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /:
+    get:
+      tags: []
+      summary: homepage
+      operationId: homepage
+      description: Open the homepage
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: error
+  /createitem:
+    post:
+      tags: []
+      summary: adds an item for sale
+      operationId: addItem
+      description: Adds an item to the system
+      responses:
+        '200':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesItem'
+        description: Sales item to add
+  /getitems:
+    get:
+      summary: get items
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+              examples:
+                example-1:
+                  value:
+                    items: ''
+      operationId: get-items
+  /deleteitem/:id:
+    delete:
+      tags: []
+      summary: deletes an item
+      operationId: deleteItem
+      description: Deletes an item from the system
+      responses:
+        '200':
+          description: item removed
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: error
+  /edititem:id:
+    put:
+      tags: []
+      summary: edits an item
+      operationId: editItem
+      description: edits an item
+      responses:
+        '200':
+          description: item edited
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesItem'
+        description: Sales item to edit
+  /register:
+    post:
+      tags: []
+      summary: creates an user
+      operationId: createUser
+      responses:
+        '200':
+          description: user added
+        '400': 
+          description: user already exists
+        '500':
+          description: error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        description: User to add
+  /login:
+    post:
+      tags: []
+      summary: log in
+      operationId: logIn
+      responses:
+        '200':
+          description: logged in
+        '400': 
+          description: incorrect credentials
+        '500':
+          description: error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        description: log in
+  /sendImages:
+    post:
+      tags: []
+      summary: send images
+      operationId: sendImages
+      responses:
+        '200':
+          description: Images sent succesfully
+        '400':
+          description: wrong file size or file format
+        '500':
+          description: error
+components:
+  schemas:
+    item:
+      title: item
+      type: object
+      properties:
+        name:
+          type: string
+    user:
+      title: user
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+    SalesItem:
+      type: object
+      required:
+        - title
+        - description
+        - category
+        - location
+        - price
+        - postingDate
+        - deliveryType
+      properties:
+        title:
+          type: string
+          example: ''
+        description:
+          type: string
+          example: ''
+        category:
+          type: string
+          example: ''
+        location:
+          type: string
+          example: ''
+        postingDate:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        deliveryType:
+          type: string
+          example: ''
+        SellerInfo:
+          type: string
+          example: 'joe doe 0334232032'
+        releaseDate:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
